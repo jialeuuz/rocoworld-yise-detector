@@ -1,0 +1,46 @@
+{
+  "log_path": "../samples/sample_encounter.log",
+  "database_path": "../data/monsters.sample.json",
+  "encodings": [
+    "utf-8",
+    "gbk"
+  ],
+  "poll_interval_seconds": 1.0,
+  "line_filters": [
+    "ENCOUNTER"
+  ],
+  "field_aliases": {
+    "monster_id": [
+      "monster_id",
+      "pet_id",
+      "id"
+    ],
+    "monster_name": [
+      "monster_name",
+      "pet_name",
+      "name"
+    ],
+    "form": [
+      "form",
+      "variant",
+      "shape"
+    ],
+    "skin": [
+      "skin",
+      "appearance",
+      "costume"
+    ],
+    "palette": [
+      "palette",
+      "color",
+      "colour",
+      "chromatic"
+    ],
+    "rare_flag": [
+      "rare_flag",
+      "shiny",
+      "is_shiny"
+    ]
+  }
+}
+

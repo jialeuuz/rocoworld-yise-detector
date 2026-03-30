@@ -1,0 +1,35 @@
+{
+  "variants": [
+    {
+      "monster_id": "1001",
+      "monster_name": "火花",
+      "form": "default",
+      "label": "火花 / Standard",
+      "is_shiny": false,
+      "match_fields": {
+        "palette": "standard"
+      }
+    },
+    {
+      "monster_id": "1001",
+      "monster_name": "火花",
+      "form": "default",
+      "label": "火花 / Shiny Crimson",
+      "is_shiny": true,
+      "match_fields": {
+        "palette": "crimson"
+      }
+    },
+    {
+      "monster_id": "2001",
+      "monster_name": "喵呜",
+      "form": "default",
+      "label": "喵呜 / Standard",
+      "is_shiny": false,
+      "match_fields": {
+        "skin": "default"
+      }
+    }
+  ]
+}
+

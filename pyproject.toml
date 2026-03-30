@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rocoworld-yise-detector"
+version = "0.1.0"
+description = "A local log-based shiny detector scaffold for Rocoworld."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "jialeuuz" }
+]
+dependencies = []
+
+[project.scripts]
+rocoworld-yise-detector = "rocoworld_yise_detector.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
