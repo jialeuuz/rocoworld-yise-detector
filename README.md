@@ -35,6 +35,22 @@ The project prioritizes log parsing over computer vision because if stable field
 - 不做自动点击、自动战斗、自动刷图。  
 - Do not automate clicking, combat, or grinding.
 
+## 使用前置条件 / Prerequisite
+
+根据官方 FAQ，游戏客户端支持手动开启“深度日志”。如果没有先开启深度日志，即使本工具配置正确，也可能根本读不到真实遭遇日志。  
+According to the official FAQ, the client supports manually enabling "deep logging". If deep logging is not enabled first, the tool may fail to find any real encounter logs even when the rest of the setup is correct.
+
+可用入口有两条。  
+There are two known entry points.
+
+- 游戏内 `罗盘 -> 设置 -> 用户 -> 开启深度日志`  
+- In game: `Compass -> Settings -> User -> Enable deep logging`
+- 登录界面 `修复工具 -> 开启深度日志`  
+- Login screen: `Repair Tool -> Enable deep logging`
+
+官方界面里还提供“上报日志”入口，但当前项目依赖的是本地落盘日志，不依赖上传流程。  
+The client also exposes a "submit/upload logs" action, but the current project only relies on local log files and does not depend on the upload flow.
+
 ## 唯一方案 / Single Approach
 
 本项目采用的唯一方案是：读取游戏本地日志文件，提取遭遇精灵信息，并与本地数据库比对，从而判断是否为异色。  
@@ -84,22 +100,25 @@ The repository ships with demo data only; it does not represent confirmed real g
    pip install -e .
    ```
 
-2. 复制示例配置并按实际环境修改日志路径、编码和数据库路径。  
+2. 如果要接真实游戏日志，先在客户端开启深度日志。  
+   If you want to work with real game logs, enable deep logging in the client first.
+
+3. 复制示例配置并按实际环境修改日志路径、编码和数据库路径。  
    Copy the sample configuration and update the log path, encodings, and database path for your local environment.
 
    ```powershell
    Copy-Item config\config.example.json config\config.local.json
    ```
 
-3. 先用示例日志跑一次扫描，确认骨架工作正常。  
+4. 先用示例日志跑一次扫描，确认骨架工作正常。  
    Run a one-off scan against the sample log to confirm the scaffold works.
 
    ```powershell
    python -m rocoworld_yise_detector scan --config config/config.example.json
    ```
 
-4. 如果已经拿到真实日志路径，再启动监听模式。  
-   Once the real log path is known, start watch mode.
+5. 如果已经拿到深度日志的真实落盘路径，再启动监听模式。  
+   Once the real deep-log output path is known, start watch mode.
 
    ```powershell
    python -m rocoworld_yise_detector watch --config config/config.local.json
@@ -123,8 +142,8 @@ If the real logs do not contain reliable fields, the project should pivot early 
 
 ## TODO
 
-- [ ] 采集真实游戏日志样本，确认日志目录、文件轮转方式和编码。  
-- [ ] Collect real game log samples and confirm the log directory, rotation behavior, and encoding.
+- [ ] 在已开启深度日志的前提下采集真实游戏日志样本，确认日志目录、文件轮转方式和编码。  
+- [ ] Collect real game log samples with deep logging enabled and confirm the log directory, rotation behavior, and encoding.
 - [ ] 找出稳定的遭遇事件标记，确认哪些行真正代表“遇敌”。  
 - [ ] Identify the stable encounter event marker and confirm which lines actually represent encounters.
 - [ ] 验证精灵名称、精灵 ID、形态、皮肤、颜色等字段是否稳定存在。  
@@ -147,4 +166,3 @@ This repository is not affiliated with the game publisher and is intended only f
 
 请在遵守当地法律、平台条款以及游戏规则的前提下使用。  
 Use it only in compliance with local law, platform terms, and game rules.
-

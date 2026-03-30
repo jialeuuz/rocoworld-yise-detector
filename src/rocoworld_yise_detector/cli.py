@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from rocoworld_yise_detector.config import load_config
@@ -10,6 +11,12 @@ from rocoworld_yise_detector.detector import ShinyDetector
 from rocoworld_yise_detector.models import DetectionResult, EncounterRecord
 from rocoworld_yise_detector.parser import EncounterParser
 from rocoworld_yise_detector.watcher import scan_log_file, tail_log_file
+
+
+DEEP_LOG_HINT = (
+    "For real game logs, enable deep logging (深度日志) first: in game Compass -> Settings -> User -> "
+    "Enable deep logging, or from the login screen Repair Tool -> Enable deep logging."
+)
 
 
 def _build_arg_parser() -> argparse.ArgumentParser:
@@ -68,11 +75,22 @@ def _process_line(raw_line: str, parser: EncounterParser, detector: ShinyDetecto
     return _format_result(detector.detect(record))
 
 
+def _warn_missing_log_file(log_path: Path) -> None:
+    print(
+        f"Log file not found: {log_path}. {DEEP_LOG_HINT} Then verify that log_path points to the generated file.",
+        file=sys.stderr,
+    )
+
+
 def _scan(config_path: str, file_override: str | None) -> int:
     config = load_config(config_path)
     parser = EncounterParser(config.field_aliases, config.line_filters)
     detector = ShinyDetector(load_variants(config.database_path))
     log_path = Path(file_override).resolve() if file_override else config.log_path
+
+    if not log_path.exists():
+        _warn_missing_log_file(log_path)
+        return 0
 
     for line in scan_log_file(log_path, config.encodings):
         rendered = _process_line(line, parser, detector)
@@ -85,6 +103,9 @@ def _watch(config_path: str, from_start: bool) -> int:
     config = load_config(config_path)
     parser = EncounterParser(config.field_aliases, config.line_filters)
     detector = ShinyDetector(load_variants(config.database_path))
+
+    if not config.log_path.exists():
+        _warn_missing_log_file(config.log_path)
 
     try:
         for line in tail_log_file(
@@ -121,4 +142,3 @@ def main(argv: list[str] | None = None) -> int:
         return _parse_line(args.config, args.line)
     parser.error(f"Unsupported command: {args.command}")
     return 2
-
