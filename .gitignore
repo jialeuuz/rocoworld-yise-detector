@@ -12,3 +12,4 @@ dist/
 *.egg-info/
 config/config.local.json
 test.md
+night_plan.md

@@ -30,7 +30,7 @@
 - `tests/`
   单元测试。当前只覆盖解析与判定层。
 - `README.md`
-  面向用户的项目说明，不是 AI 导航入口。
+  面向用户的项目说明，不是 AI 导航入口。应优先保留通知、前置条件、安装、配置、运行、输出和排障，不要把内部架构、研究计划、AI 导航信息堆进去。
 - `test.md`
   当前是本地临时文件，不属于项目结构的一部分。除非用户明确要求，否则不要把它当成实现依据。
 
@@ -134,6 +134,8 @@
   先看 `src/rocoworld_yise_detector/readme_for_ai.md`，通常会同时改 `models.py`、`config.py`、`parser.py`，如果字段参与判定，还要改 `detector.py` 和 `data/` 里的规则 JSON。
 - 修改日志路径、编码、别名或配置加载方式
   先看 `config/readme_for_ai.md`，然后回到源码文档中的 `config.py` 和 `cli.py`。
+- 修改用户可见的使用方式、前置条件、已知限制或最新进展
+  先同步 `README.md` 顶部的通知区，再决定是否需要更新本文件或子目录 AI 文档。
 - 排查“日志读到了但没有输出”
   先确认是否已开启深度日志，再看 `src/rocoworld_yise_detector/readme_for_ai.md` 中的 `watcher.py`、`parser.py`、`cli.py`，最后结合 `samples/readme_for_ai.md` 和 `tests/readme_for_ai.md`。
 - 排查“输出是 UNKNOWN 或误判”
