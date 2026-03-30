@@ -6,8 +6,8 @@ __pycache__/
 *.pyo
 *.pyd
 *.log
+!samples/*.log
 build/
 dist/
 *.egg-info/
 config/config.local.json
-
